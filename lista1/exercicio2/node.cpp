@@ -1,32 +1,32 @@
 // MyCode
 #include "node.hpp"
 
-Node::Node(int value)
-    : value_(value)
-{
-}
+    //Constructors
+    Node::Node(int value)
+        : value_(value)
+    {
+    }
 
-const Node& previous()
-{
-    return previous_;
-}
+    Node::Node(int value, Node previous , Node next ){
+        value_ = value;
+        previous_ = previous;
+        next_ = next;
+    }
  
-const Node& next()
-{
-    return next_;
-}
+    //Methods
+
+    int Node::value() const
+    {
+        return value_;
+    }
+
+    const Node& Node::previous() const
+    {
+        return previous_;
+    }
+    
+    const Node& Node::next() const
+    {
+        return next_;
+    }
  
-void Node::translate(double x, double y)
-{
-    x_ += x;
-    y_ += y;
-}
- 
-double Node::distance(const Node& other) const
-{
-    double dx = x_ - other.x_;
-    double dy = y_ - other.y_;
- 
-    double d = std::sqrt(dx*dx  + dy*dy);
-    return d;
-}

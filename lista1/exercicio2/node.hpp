@@ -10,7 +10,7 @@ class Node
 
         //Constructors
         Node(int value= 0);
-        Node(int value= 0, Node previous, Node next);
+        Node(int value= 0, Node previous = NULL, Node next = NULL);
  
         //Methods
         int value() const;
