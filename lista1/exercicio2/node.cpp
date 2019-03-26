@@ -7,12 +7,12 @@
     {
     }
 
-    Node::Node(int value, Node previous , Node next ){
+/*    Node::Node(int value, Node previous , Node next ){
         value_ = value;
         previous_ = previous;
         next_ = next;
     }
- 
+*/ 
     //Methods
 
     int Node::value() const
@@ -28,5 +28,13 @@
     const Node& Node::next() const
     {
         return next_;
+    }
+
+    void Node::setPrevious(Node node){
+
+    }
+
+    void Node::setNext(Node node){
+
     }
  
