@@ -33,3 +33,22 @@ double Point::distance(const Point& other) const
     double d = std::sqrt(dx*dx  + dy*dy);
     return d;
 }
+
+
+  do
+    {
+        std::string option;
+        std::cout << "------------------" << std::endl;
+        std::cout << "Escolha uma das opções:" << std::endl;
+        std::cout << "1 - Retornar o primeiro elemento" << std::endl;
+        std::cout << "2 - Retorna o último elemento " << std::endl;
+        std::cout << "3 - Inserir Valor no Início" << std::endl;
+        std::cout << "4 - Inserir Valor no Final" << std::endl;
+        std::cout << "5 - Remover o primeiro elemento " << std::endl;
+        std::cout << "6 - Remover o último elemento" << std::endl;
+        std::cout << "0 - Encerar o programa" << std::endl;
+        std::cin >> option ;
+
+        
+    } while (/* condition */);
+    

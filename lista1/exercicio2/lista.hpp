@@ -1,7 +1,11 @@
 #ifndef __LISTA_HPP__
 #define __LISTA_HPP__
- 
-#include "node.hpp"
+
+#include <iostream>
+
+//My Code
+#include "no.cpp"
+
 class Lista
 {
     public:
@@ -10,23 +14,23 @@ class Lista
         Lista();
  
         // Methods or Member Functions 
-        const Node& fim() const;
- 
-        const Node& inicio() const;
 
-        void push_front(Node node);
-        void push_back(Node node);
+        int front();
+        int back();
+
+        void push_front(int value);
+        void push_back(int value);
 
         void pop_front();
         void pop_back();
+        
+        void exibeLista();
  
     private:
  
         // Properties or Attributes or Data Members
-        Node inicio_;
-        Node fim_;
-        int length_;
-        
+        No *front_ = NULL;
+        No *back_ = NULL;   
 };
  
-#endif // __LISTA_HPP__
+#endif // __LISTA_HPP

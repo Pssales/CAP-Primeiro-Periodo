@@ -1,71 +1,108 @@
-#ifndef NULL
-#define NULL 0
-#endif
-
-#include "lista.hpp"
-#include "node.hpp"
-
 #include <iostream>
 
-// Constructor
-Lista::Lista(){
-    length_ = -1;
-    inicio_ = NULL;
-    fim_ = NULL;
-}
+#include "lista.hpp"
 
-// Methods or Member Functions 
-const Node& Lista::inicio() const{
-    return inicio_;
-}
-
-const Node& Lista::fim() const{
-    return fim_;
-}
-
-void Lista::push_front(Node node) {
-    if(length_ == -1){
-        inicio_ = node;
-        fim_ = node;
-    }else{
-        node.setNext(inicio_);
-        inicio_.setPrevious(node);
-        inicio_ = node;
+    Lista::Lista()
+    {
+        front_ = NULL;
+        back_ = NULL;
     }
-    length_++;
-}
 
-void Lista::push_back(Node node) {
-    if(length_ == -1){
-        inicio_ = node;
-        fim_ = node;
-    }else{
-        node.setPrevious(fim_);
-        fim_.setNext(node);
-        fim_ = node;
+    int Lista::front(){
+        if (front_ == NULL) {
+            std::cout << "Lista Vazia!!!" << std::endl;
+            return -1;
+        }
+        return front_->value_;
+    } 
+
+    int Lista::back(){
+        if (back_ == NULL) {
+            std::cout << "Lista Vazia!!!" << std::endl;
+            return -1;
+        }
+        return back_->value_;
     }
-    length_++;
-}
 
+    void Lista::push_front(int value)
+    {
+        No *newElement;
 
+        newElement = new No;
 
-void Lista::pop_front() {
-    if(length_ == -1){
-        std::cout << "Lista Vazia" << std::endl;
-    }else{
-        inicio_ = inicio_.next();
+        newElement->value_ = value;
+
+        newElement->next_ = NULL;
+        newElement->previous_ = NULL;
+
+        if(front_ == NULL)
+        {
+            front_ = newElement;
+            back_ = newElement;
+        }
+        else
+        {
+            front_->previous_ = newElement;
+            newElement->next_ = front_;
+            front_ = newElement;    
+        }
+
     }
-    length_++;
-}
 
-void Lista::pop_back() {
-    if(length_ == -1){
-        std::cout << "Lista Vazia" << std::endl;
-    }else{
-        fim_ = fim_.previous();
+    void Lista::push_back(int value)
+    {
+        No *newElement;
+
+        newElement = new No;
+
+        newElement->value_ = value;
+
+        newElement->next_ = NULL;
+        newElement->previous_ = NULL;
+
+        if(front_ == NULL)
+        {
+            front_ = newElement;
+            back_ = newElement;   
+        }
+        else
+        {
+            back_->next_ = newElement;
+            newElement->previous_ = back_;
+            back_ = newElement;
+        }
     }
-    length_++;
+
+    void Lista::pop_front(){
+        if (front_ == NULL) {
+            std::cout << "Lista Vazia!!!" << std::endl;
+        }else
+        {
+            front_ = front_->next_;
+        }
+    }
+
+    void Lista::pop_back(){
+        if (back_ == NULL) {
+            std::cout << "Lista Vazia!!!" << std::endl;
+        }else
+        {
+            back_ = back_->previous_;
+            back_->next_ = NULL;
+        }
+    }
+
+    void Lista::exibeLista(){
+    No *aux;
+    if(front_ == NULL){
+        printf("Lista Vazia");
+    }
+    aux = front_;
+    while(aux != NULL)
+    {
+        printf("Info = %dn", aux->value_);
+        aux = aux->next_;
+    }
+    printf("----------------fim-----------");
 }
-
-
 

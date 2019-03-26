@@ -1,24 +1,26 @@
-/*
-
-Projete e implemente uma estrutura de dados do tipo lista duplamente encadeada que forneça as seguintes operações:
-• front(): Retorna o primeiro elemento da lista.
-• back(): Retorna o último elemento da lista.
-• push_front(v): Insere o valor v na cabeça da lista.
-• push_back(v): Insere o valor v ao final da lista.
-• pop_front(): Remove o primeiro elemento da lista.
-• pop_back(): Remove o último elemento da lista
-
-*/
-#include "lista.hpp"
-#include "node.hpp"
-
 #include <iostream>
-int main(){
-    Lista l;
+#include "lista.hpp"
 
-    Node node1(1);
-    Node node2(2);
-    Node node3(3);
-    Node node4(4);
-    
+int main(void)
+{
+    Lista lista;
+    std::cout << "Front " <<  lista.front() << std::endl;
+
+    lista.push_front(1);
+    lista.push_front(2);
+    lista.push_back(3);
+    lista.push_back(4);
+    lista.exibeLista();
+    std::cout << "------------------" << std::endl;
+    lista.pop_front();
+    lista.exibeLista(); 
+    std::cout << "------------------" << std::endl;
+
+    lista.pop_back();
+    lista.exibeLista();   
+    std::cout << "------------------" << std::endl;
+
+
+    std::cout << "Front " <<  lista.front() << std::endl;
+    std::cout << "Back  " <<  lista.back() << std::endl;
 }
