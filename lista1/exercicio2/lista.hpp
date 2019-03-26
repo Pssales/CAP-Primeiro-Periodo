@@ -18,8 +18,8 @@ class Lista
         int front();
         int back();
 
-        void push_front(int value);
-        void push_back(int value);
+        void push_front();
+        void push_back();
 
         void pop_front();
         void pop_back();

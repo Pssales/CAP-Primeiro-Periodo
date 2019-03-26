@@ -1,26 +1,45 @@
 #include <iostream>
 #include "lista.hpp"
-
+#include <stdio.h>
 int main(void)
 {
     Lista lista;
-    std::cout << "Front " <<  lista.front() << std::endl;
 
-    lista.push_front(1);
-    lista.push_front(2);
-    lista.push_back(3);
-    lista.push_back(4);
-    lista.exibeLista();
-    std::cout << "------------------" << std::endl;
-    lista.pop_front();
-    lista.exibeLista(); 
-    std::cout << "------------------" << std::endl;
+    int option;
+    do
+    {
+        std::cout << "------------------" << std::endl;
+        std::cout << "Escolha uma das opções:" << std::endl;
+        std::cout << "1 - Retornar o primeiro elemento" << std::endl;
+        std::cout << "2 - Retorna o último elemento " << std::endl;
+        std::cout << "3 - Inserir Valor no Início" << std::endl;
+        std::cout << "4 - Inserir Valor no Final" << std::endl;
+        std::cout << "5 - Remover o primeiro elemento " << std::endl;
+        std::cout << "6 - Remover o último elemento" << std::endl;
+        std::cout << "0 - Encerar o programa" << std::endl;
+        std::cin >> option ;
 
-    lista.pop_back();
-    lista.exibeLista();   
-    std::cout << "------------------" << std::endl;
+        switch (option){
+            case '1':
+                std::cout << lista.front() <<"\n\n";
+            break;
+            case '2':
+                std::cout << lista.back() <<"\n\n";
+            break;
+            case '3':
+                lista.pop_front();
+            break;
+            case '4':
+                lista.pop_back();
+            break;
+            case '5':
+                lista.pop_front();
+            break;
+            case '6':
+                lista.pop_back();
+            break;
+        }
+        
+    } while (option != 0);
 
-
-    std::cout << "Front " <<  lista.front() << std::endl;
-    std::cout << "Back  " <<  lista.back() << std::endl;
 }
