@@ -53,7 +53,7 @@ void Lista::pop_front() {
     if(length_ == -1){
         std::cout << "Lista Vazia" << std::endl;
     }else{
-        inicio_ = inicio.next();
+        inicio_ = inicio_.next();
     }
     length_++;
 }
@@ -62,7 +62,7 @@ void Lista::pop_back() {
     if(length_ == -1){
         std::cout << "Lista Vazia" << std::endl;
     }else{
-        fim_ = fim_.previus();
+        fim_ = fim_.previous();
     }
     length_++;
 }

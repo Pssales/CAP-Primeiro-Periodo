@@ -8,8 +8,8 @@
 typedef struct TipoNo
 {
     int valor;
-    struct TipoNo *prox;
-    struct TipoNo *ant;
+    struct TipoNo *proximo;
+    struct TipoNo *anterior;
 }TNo;
 
 //Cria início da lista
@@ -56,7 +56,7 @@ void inserirNoFim(TLista *pLista)
 {
     TNo *novoElemento;
 
-    novoElemento = TNo;
+    novoElemento = new TNo;
 
     printf("Informe o valor:");
     scanf("%d",&novoElemento->valor);
@@ -86,8 +86,9 @@ void exibeLista(TLista *pLista){
     while(aux != NULL)
     {
         printf("Info = %dn", aux->valor);
+        aux = aux->proximo;
     }
-    printf("----------------fim-----------")
+    printf("----------------fim-----------");
 }
 
 int main(void)
@@ -101,5 +102,5 @@ int main(void)
     inserirNoInicio(&listaDuplamenteEncadeada);
     inserirNoInicio(&listaDuplamenteEncadeada);
     inserirNoFim(&listaDuplamenteEncadeada);
-    exibeLista(&listaDuplamanteEncadeada);
+    exibeLista(&listaDuplamenteEncadeada);
 }

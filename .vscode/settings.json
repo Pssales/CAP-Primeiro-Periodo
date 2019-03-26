@@ -22,6 +22,7 @@
         "system_error": "cpp",
         "type_traits": "cpp",
         "typeinfo": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "cmath": "cpp"
     }
 }

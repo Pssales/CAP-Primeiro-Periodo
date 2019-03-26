@@ -9,9 +9,10 @@ Projete e implemente uma estrutura de dados do tipo lista duplamente encadeada q
 • pop_back(): Remove o último elemento da lista
 
 */
-#import "lista.hpp"
+#include "lista.hpp"
+#include "node.hpp"
 
-#import <iostream>
+#include <iostream>
 int main(){
     Lista l;
 

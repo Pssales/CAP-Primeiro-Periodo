@@ -31,10 +31,10 @@
     }
 
     void Node::setPrevious(Node node){
-
+        previous_ = node;
     }
 
     void Node::setNext(Node node){
-
+        previous_ = node;
     }
  
