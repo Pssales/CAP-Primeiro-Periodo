@@ -24,12 +24,8 @@
         return back_->value_;
     }
 
-    void Lista::push_front()
+    void Lista::push_front(int value)
     {
-        int value;
-        std::cout << "Informe o número" << std::endl;
-        std::cin >> value ;
-
         No *newElement;
 
         newElement = new No;
@@ -53,13 +49,9 @@
 
     }
 
-    void Lista::push_back()
+    void Lista::push_back(int value)
     {
-
-        int value;
-        std::cout << "Informe o número" << std::endl;
-        std::cin >> value ;
-        
+       
         No *newElement;
 
         newElement = new No;
