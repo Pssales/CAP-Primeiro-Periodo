@@ -18,21 +18,24 @@ Pilha::~Pilha()
 }
 
 //Methods
-void Pilha::push(int value){
-    if(topo_ == tam_-1){
 
+/*void Pilha::push(int value){
+    if(topo_ == tam_){
         cout << "Pilha cheia" << endl;
-        int * aux;
-        aux = new int[++tam_];
-        *aux = *vet_;
-        vet_ = aux;
-        vet_[++topo_] = value;
-        delete [] aux;
+        cout << "topo" << topo_<< endl;
+        cout << "tam_" << tam_ << endl;
+        vet_ = new int[++tam_];
     }
-    else{
-        vet_[++topo_] = value;
-    }
+    vet_[++topo_] = value;
+}*/
 
+void Pilha::push(int valor)
+{
+    if (topo_ > tam_){
+        tam_+=1;
+        vet_ = new int[tam_];
+    }
+    vet_[++topo_] = valor;
 }
 
 void Pilha::pop(){

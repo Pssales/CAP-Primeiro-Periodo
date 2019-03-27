@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
         std::cout << "2 - Remover topo" << std::endl;
         std::cout << "3 - Exibir topo" << std::endl;
         std::cout << "4 - Verificar se esta vazia" << std::endl;
-        std::cout << "0 - Encerar o programa" << std::endl;
+        std::cout << "0 - Encerrar o programa" << std::endl;
         std::cin >> option ;
 
         switch (option){
