@@ -93,17 +93,5 @@
         }
     }
 
-    void Lista::exibeLista(){
-    No *aux;
-    if(front_ == NULL){
-        printf("Lista Vazia");
-    }
-    aux = front_;
-    while(aux != NULL)
-    {
-        printf("Info = %dn", aux->value_);
-        aux = aux->next_;
-    }
-    printf("----------------fim-----------");
-}
+
 

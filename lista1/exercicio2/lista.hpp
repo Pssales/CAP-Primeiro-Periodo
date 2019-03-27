@@ -23,9 +23,7 @@ class Lista
 
         void pop_front();
         void pop_back();
-        
-        void exibeLista();
- 
+         
     private:
  
         // Properties or Attributes or Data Members
