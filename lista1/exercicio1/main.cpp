@@ -10,14 +10,16 @@ operações de empilhamento (push), caso haja a necessidade de alocação de mai
 a implementação deverá cuidar desses detalhes
 */
 
+// C++ Standard Library
+#include <iostream>
+#include <string>
+#include <locale.h>
 // MyCode
 #include "pilha.hpp"
  
-// C++ Standard Library
-#include <iostream>
- 
 int main(int argc, char *argv[])
 {
+    setlocale(LC_ALL, "Portuguese_Brasil.1252");
     int tamanho;
 	std::cout << "Qual o tamanho da pilha?" << std::endl;
     std::cin >> tamanho ;
@@ -27,7 +29,7 @@ int main(int argc, char *argv[])
     do
     {
         std::cout << "------------------" << std::endl;
-        std::cout << "Escolha uma das opções:" << std::endl;
+        std::cout << "Escolha uma das alternativas:" << std::endl;
         std::cout << "1 - Empilhar" << std::endl;
         std::cout << "2 - Remover topo" << std::endl;
         std::cout << "3 - Exibir topo" << std::endl;
@@ -38,7 +40,7 @@ int main(int argc, char *argv[])
         switch (option){
             case 1:
                 int value;
-                std::cout << "Informe o número" << std::endl;
+                std::cout << "Informe o valor" << std::endl;
                 std::cin >> value ;
                 p.push(value);
             break;

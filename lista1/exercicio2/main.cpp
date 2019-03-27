@@ -7,9 +7,14 @@ Projete e implemente uma estrutura de dados do tipo lista duplamente encadeada q
 • pop_front(): Remove o primeiro elemento da lista.
 • pop_back(): Remove o último elemento da lista.
 */
+
+// C++ Standard Library
 #include <iostream>
-#include "lista.hpp"
 #include <stdio.h>
+
+//My code
+#include "lista.hpp"
+
 int main(void)
 {
     Lista lista;
@@ -19,13 +24,13 @@ int main(void)
     do
     {
         std::cout << "------------------" << std::endl;
-        std::cout << "Escolha uma das opções:" << std::endl;
+        std::cout << "Escolha uma das alternativas:" << std::endl;
         std::cout << "1 - Retornar o primeiro elemento" << std::endl;
-        std::cout << "2 - Retorna o último elemento " << std::endl;
-        std::cout << "3 - Inserir Valor no Início" << std::endl;
+        std::cout << "2 - Retorna o ultimo elemento " << std::endl;
+        std::cout << "3 - Inserir Valor no Inicio" << std::endl;
         std::cout << "4 - Inserir Valor no Final" << std::endl;
         std::cout << "5 - Remover o primeiro elemento " << std::endl;
-        std::cout << "6 - Remover o último elemento" << std::endl;
+        std::cout << "6 - Remover o ultimo elemento" << std::endl;
         std::cout << "0 - Encerar o programa" << std::endl;
         std::cin >> option ;
 
@@ -37,12 +42,12 @@ int main(void)
                 std::cout << lista.back() <<"\n\n";
             break;
             case 3:
-                std::cout << "Informe o número" << std::endl;
+                std::cout << "Informe o valor" << std::endl;
                 std::cin >> value ;
                 lista.push_front(value);
             break;
             case 4:
-                std::cout << "Informe o número" << std::endl;
+                std::cout << "Informe o valor" << std::endl;
                 std::cin >> value ;
                 lista.push_back(value);
             break;
