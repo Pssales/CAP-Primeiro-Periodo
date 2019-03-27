@@ -6,9 +6,9 @@
 
 using namespace std;
 
-Pilha::Pilha(){
-    vet_ = new int[100];
-    max_tam_ = 99;
+Pilha::Pilha(int tamanho){
+    vet_ = new int[tamanho];
+    tam_ = tamanho;
     topo_ = -1;
 }
 
@@ -19,10 +19,19 @@ Pilha::~Pilha()
 
 //Methods
 void Pilha::push(int value){
-    if(topo_ == max_tam_)
+    if(topo_ == tam_-1){
+
         cout << "Pilha cheia" << endl;
-    else
+        int * aux;
+        aux = new int[++tam_];
+        *aux = *vet_;
+        vet_ = aux;
         vet_[++topo_] = value;
+        delete [] aux;
+    }
+    else{
+        vet_[++topo_] = value;
+    }
 
 }
 

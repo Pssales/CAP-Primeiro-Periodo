@@ -18,8 +18,10 @@ a implementação deverá cuidar desses detalhes
  
 int main(int argc, char *argv[])
 {
-	 
-    Pilha p;
+    int tamanho;
+	std::cout << "Qual o tamanho da pilha?" << std::endl;
+    std::cin >> tamanho ;
+    Pilha p(tamanho);
 
     int option;
     do

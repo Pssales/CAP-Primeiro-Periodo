@@ -4,7 +4,7 @@
 class Pilha {
 
     public:
-        Pilha();
+        Pilha(int tamanho);
         ~Pilha();
 
         //Methods
@@ -16,7 +16,7 @@ class Pilha {
 
     private:
         int * vet_;
-        int max_tam_;
+        int tam_;
         int topo_;
 
 };
