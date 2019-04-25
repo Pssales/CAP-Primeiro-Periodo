@@ -10,8 +10,8 @@ template <class Template>
         public:
 
             struct Node{
-                Node* next;
-                Template val;
+                Node* next_;
+                Template val_;
             }
 
             // Contructor and destructor
@@ -27,15 +27,15 @@ template <class Template>
         
     
         private:
-            Node* begin;
-            Node* end;
+            Node* begin_;
+            Node* end_;
     };
     
     template<class Template> 
     Fila<Template>::Fila()
     {
-        begin = NULL;
-        end = NULL
+        begin_ = NULL;
+        end_ =  NULL;
     }
     
     template<class Template>
@@ -45,7 +45,12 @@ template <class Template>
     template<class Template> void
     Fila<Template>::insert(const Template& val)
     {
-
+        Node * newNode = new Node();
+        newNode->next_ = NULL;
+        newNode->val_ = val;
+        if(begin == NULL){
+            ge
+        }
     }
 
     template<class Template> void
