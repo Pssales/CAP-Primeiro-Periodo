@@ -1,4 +1,4 @@
- program meuprog
+        program meuprog
         integer , parameter :: m=4000
         integer :: i,j
         double precision, allocatable :: a(:,:),b(:,:)
@@ -21,8 +21,8 @@
         enddo
 
         t1=mysecond()
-        do i=1,m
-                do j=1,m
+        do j=1,m
+                do i=1,m
                         b(i,j) = s * a(i,j)
                         soma = soma + b(i,j)
                 enddo
