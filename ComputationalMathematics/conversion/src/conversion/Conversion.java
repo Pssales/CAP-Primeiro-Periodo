@@ -1,21 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package conversion;
 
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author Camila
+ * @author Camila Sales
  */
 public class Conversion {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         String base = JOptionPane.showInputDialog("Informe a base original");        
         String numb = JOptionPane.showInputDialog("Informe o número");
