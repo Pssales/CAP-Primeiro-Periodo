@@ -1,211 +1,257 @@
-#ifndef __TREE_HPP__
-#define __TREE_HPP__
+#ifndef __LIST_EXE04__
+#define __LIST_EXE04__
 
 #include <iostream>
 
-template <class Template>
-    class Tree{
-        public:
-            struct Node{
-                Node* left;
-                Node* right;
-                Node* parent;
-                Template data;
-            };
+template<class Template>
+class Tree {
+    public:
+        struct node {
+            node * left;
+            node * right;
+            node * parent;
+            Template data;
+        };
 
-            //Constructor
-            Tree();
-            //Destructor
-            ~Tree();
+        Tree();
+        ~Tree();
 
-            //Basic Functions
-            int level(Node* node); 
-            void insert(const Template& value);
-            void remove(Node * position);
+        node * getRoot();
+        int level(node * n);
+        const Template& retrieve(node * n) const;
+        void print(node * n);
 
-            //Print Functions
-            void print(Node * n); 
-            void preOrder(Node * n);
-            void inOrder(Node * n);
-            void posOrder(Node * n);
+        void insert(const Template& value);
+        node * find(const Template& value, node * n) const;
+        void remove(node * position);
 
-        //Block constructor with object and assignment
-        private:
-            Tree(Tree&);
-            Tree& operator=(Tree&);
+        void preOrder(node * n);
+        void inOrder(node * n);
+        void posOrder(node * n);
 
-        private:
-            node * root;
+        int height(node * n);
 
-    };
+        void clear(node * n);
+    private:
+        Tree(Tree&);
+        Tree& operator=(Tree&);
+    private:
+        node * root;
+};
 
-    //Constructor
-    template<class Template>
-    Tree<Template>::Tree(){
-        root = NULL;
+//Constructor and Destructor
+template<class Template>
+Tree<Template>::Tree () {
+    root = NULL;
+}
+
+template<class Template>
+Tree<Template>::~Tree () {
+    clear(root);
+}
+
+//Methods
+
+template<class Template> typename Tree<Template>::node *
+Tree<Template>::getRoot() {
+    return root;
+}
+
+template<class Template> int
+Tree<Template>::level(node * n){
+    int l = 1;
+    while (n->parent != NULL) {
+        l ++;
+        n = n->parent;
     }
+    return l; 
+}
 
-    //Destructor
-    template<class Template>
-    Tree<Template>::~Tree(){
-       delete(root);
+template<class Template> const Template&
+Tree<Template>::retrieve(node * n) const {
+    return n->data;
+}
+
+template<class Template> void
+Tree<Template>::print(node * n) {
+    if (n->right != NULL) {
+        print (n->right);
     }
+    for (int i = 0; i < level(n); i++) {
+        std::cout << "    ";
+    }
+    std::cout << n->data << std::endl;
+    if (n->left != NULL) {
+        print (n->left);
+    }
+}
 
-
-    //Basic Functions
-    template<class Template> int
-    Tree<Template>::level(Node * n){
-        int l = 1;
-        while (n->parent != nullptr) {
-            l ++;
-            n = n->parent;
+template<class Template> void
+Tree<Template>::insert(const Template& value) {
+    node * n = root;
+    node * parent = NULL;
+    while (n) {
+        if (n->data == value) {
+            std::cout << "Duplicated value is not allowed!" << std::endl;
+            return;
         }
-        return l; 
-    }    
+        parent = n;
+        n = (value < n->data) ? n->left : n->right;
+    }
+    node * neo = new node();
+    neo->data = value;
+    neo->left = NULL;
+    neo->right = NULL;
+    neo->parent = parent;
+    if (parent == NULL) {
+        root = neo;
+    }else if(value < parent->data) {
+        parent->left = neo;
+    }else{
+        parent->right = neo;
+    }
+}
 
-    template<class Template> void
-    Tree<Template>::insert(const Template& value) {
-        node * n = root;
-        node * parent = nullptr;
-        while (n) {
-            if (n->data == value) {
-                std::cout << "Duplicated value is not allowed!" << std::endl;
-                return;
+template<class Template> typename Tree<Template>::node *
+Tree<Template>::find(const Template& value, node * n) const {
+    if (n == NULL) {
+        return NULL;
+    }
+    if (n->data == value) {
+        return n;
+    }
+    return (value < n->data) ? find(value, n->left) : find(value, n->right);
+}
+
+template<class Template> void
+Tree<Template>::remove(node * position) {
+    //First case: Leaf node
+    if (position->left == NULL && position->right == NULL) {
+        if (position->parent != NULL) {
+            if (position->parent->left = position) {
+                position->parent->left = NULL;
+            }else{
+                position->parent->right = NULL;
             }
-            parent = n;
-            n = (value < n->data) ? n->left : n->right;
         }
-        node * neo = new node();
-        neo->data = value;
-        neo->left = nullptr;
-        neo->right = nullptr;
-        neo->parent = parent;
-        if (parent == nullptr) {
-            root = neo;
-        }else if(value < parent->data) {
-            parent->left = neo;
+        delete position;
+        return;
+    }
+
+    //Second case: One child (An ugly mess of ifs and elses...)
+    if (position->left != NULL && position->right == NULL) {
+        //std::cout << "Second Case: Left" << std::endl;
+        if (position->parent != NULL) {
+            //std::cout << "There is a parent" << std::endl;
+            if (position->parent->left == position) {
+                //std::cout << "I'm a left child" << std::endl;
+                position->parent->left = position->left;
+            }else{
+                //std::cout << "I'm a right child" << std::endl;
+                position->parent->right = position->left;
+            }
+            position->left->parent = position->parent;
         }else{
-            parent->right = neo;
+            //std::cout << "There is no parent" << std::endl;
+            position->left->parent = NULL;
+            root = position->left;
         }
+        //std::cout << "Deleting Position" << std::endl;
+        delete position;
+        return;
     }
-
-    template<class Template> void
-    Tree<Template>::remove(Node * position) {
-        //First case: Leaf node
-        if (position->left == nullptr && position->right == nullptr) {
-            if (position->parent != nullptr) {
-                if (position->parent->left = position) {
-                    position->parent->left = nullptr;
-                }else{
-                    position->parent->right = nullptr;
-                }
-            }
-            delete position;
-            return;
-        }
-
-        //Second case: One child (An ugly mess of ifs and elses...)
-        if (position->left != nullptr && position->right == nullptr) {
-            //std::cout << "Second Case: Left" << std::endl;
-            if (position->parent != nullptr) {
-                //std::cout << "There is a parent" << std::endl;
-                if (position->parent->left == position) {
-                    //std::cout << "I'm a left child" << std::endl;
-                    position->parent->left = position->left;
-                }else{
-                    //std::cout << "I'm a right child" << std::endl;
-                    position->parent->right = position->left;
-                }
-                position->left->parent = position->parent;
+    if (position->right != NULL && position->left == NULL) {
+        //std::cout << "Second Case: Right" << std::endl;
+        if (position->parent != NULL) {
+            //std::cout << "There is a parent" << std::endl;
+            if (position->parent->left == position) {
+                //std::cout << "I'm a left child" << std::endl;
+                position->parent->left = position->right;
             }else{
-                //std::cout << "There is no parent" << std::endl;
-                position->left->parent = nullptr;
-                root = position->left;
+                //std::cout << "I'm a right child" << std::endl;
+                position->parent->right = position->right;
             }
-            //std::cout << "Deleting Position" << std::endl;
-            delete position;
-            return;
+            position->right->parent = position->parent;
+        }else{
+            //std::cout << "There is no parent" << std::endl;
+            position->right->parent = NULL;
+            root = position->right;
         }
-        if (position->right != nullptr && position->left == nullptr) {
-            //std::cout << "Second Case: Right" << std::endl;
-            if (position->parent != nullptr) {
-                //std::cout << "There is a parent" << std::endl;
-                if (position->parent->left == position) {
-                    //std::cout << "I'm a left child" << std::endl;
-                    position->parent->left = position->right;
-                }else{
-                    //std::cout << "I'm a right child" << std::endl;
-                    position->parent->right = position->right;
-                }
-                position->right->parent = position->parent;
-            }else{
-                //std::cout << "There is no parent" << std::endl;
-                position->right->parent = nullptr;
-                root = position->right;
-            }
-            //std::cout << "Deleting Position" << std::endl;
-            delete position;
-            return;
-        }
-        
-        //Third case: Two children
-        node * temp = position->left;
-        node * leaf;
-        while (temp) {
-            leaf = temp;
-            temp = temp->right;
-        }
-        position->data = leaf->data;
-        leaf->parent->right = nullptr;
-        delete leaf;
+        //std::cout << "Deleting Position" << std::endl;
+        delete position;
+        return;
     }
-    //Print functions
+    
+    //Third case: Two children
+    node * temp = position->left;
+    node * leaf;
+    while (temp) {
+        leaf = temp;
+        temp = temp->right;
+    }
+    position->data = leaf->data;
+    leaf->parent->right = NULL;
+    delete leaf;
+}
 
-    template<class Template> void
-    Tree<Template>::print(Node * n) {
-        if (n->right != nullptr) {
-            print (n->right);
-        }
-        for (int i = 0; i < level(n); i++) {
-            std::cout << "    ";
-        }
-        std::cout << n->data << std::endl;
-        if (n->left != nullptr) {
-            print (n->left);
-        }
+template<class Template> void
+Tree<Template>::preOrder(node * n) {
+    std::cout << n->data << " ";
+    if (n->left != NULL) {
+        preOrder (n->left);
     }
+    if (n->right != NULL) {
+        preOrder (n->right);
+    }
+}
 
-    template<class Template> void
-    Tree<Template>::preOrder(Node * n) {
-        std::cout << n->data << " ";
-        if (n->left != nullptr) {
-            preOrder (n->left);
-        }
-        if (n->right != nullptr) {
-            preOrder (n->right);
-        }
+template<class Template> void
+Tree<Template>::inOrder(node * n) {
+    if (n->left != NULL) {
+        inOrder (n->left);
     }
+    std::cout << n->data << " ";
+    if (n->right != NULL) {
+        inOrder (n->right);
+    }
+}
 
-    template<class Template> void
-    Tree<Template>::inOrder(Node * n) {
-        if (n->left != nullptr) {
-            inOrder (n->left);
-        }
-        std::cout << n->data << " ";
-        if (n->right != nullptr) {
-            inOrder (n->right);
-        }
+template<class Template> void
+Tree<Template>::posOrder(node * n){
+    if (n->left != NULL) {
+        posOrder (n->left);
     }
+    if (n->right != NULL) {
+        posOrder (n->right);
+    }
+    std::cout << n->data << " ";
+}
 
-    template<class Template> void
-    Tree<Template>::posOrder(Node * n){
-        if (n->left != nullptr) {
-            posOrder (n->left);
-        }
-        if (n->right != nullptr) {
-            posOrder (n->right);
-        }
-        std::cout << n->data << " ";
+template<class Template> int
+Tree<Template>::height(node * n) {
+    int h = 0;
+    if (n->left != NULL) {
+        h = height (n->left);
     }
+    if (n->right != NULL) {
+        h = height (n->right);
+    }
+    int l = level(n);
+    if (l > h) {
+        h = l;
+    }
+    return h;
+}
+
+template<class Template> void
+Tree<Template>::clear(node * n) {
+    if (n->right != NULL) {
+        clear (n->right);
+    }
+    if (n->left != NULL) {
+        clear (n->left);
+    }
+    delete n;
+}
 
 #endif
