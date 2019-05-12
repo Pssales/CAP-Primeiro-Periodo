@@ -246,24 +246,39 @@ INSERT INTO Matricula VALUES(11, 4, '8.0', 70);
 -- 9)	Quantos cursos foram ministrados pelo instrutor 'Leandro Siqueira'?
 -- 10)	Quantas horas de curso foram ministradas pelo instrutor 'Leandro Siqueira'?
 -- 11)	Quantas turmas foram ministradas por cada instrutor?  
-
+    SELECT Instrutor.Nome, COUNT(*) AS num
+        FROM Turma INNER JOIN Instrutor
+        ON Turma.InstrutorID = Instrutor.InstrutorID
+        GROUP BY Instrutor.InstrutorID;
 -- 12)	Quantas horas de curso foram ministradas por cada instrutor ?
 -- 13)	Se os cursos pagam 100,00 por hora ministrada, quanto cada instrutor recebeu por ano?
 -- 14)	Quais instrutores deram mais que 850 horas de curso?
 -- 15)	Quantas turmas cada curso teve por ano?
+    SELECT Curso.Nome, COUNT(Turma.TurmaID) as Total_anual, EXTRACT (YEAR FROM Turma.Data_inicio) AS ano
+    FROM (
+        Curso INNER JOIN Turma ON Turma.CursoID = Curso.CursoID
+    )
+    GROUP BY Curso.CursoID, ano;
 -- 16)	Quais cursos o aluno 'Rodrigo Gomes Dias' cursou e qual foi a nota dele em cada um?
 -- 17)	Crie uma view que contenha o histórico dos alunos contendo as seguintes informações: nome do aluno, CPF do aluno, endereço do aluno, curso ministrado, data de inicio e termino do curso, nome do instrutor do curso, carga horaria, nota final, presença.
 -- 18)	Insira uma nova turma na tabela Turma
+    INSERT INTO Turma VALUES(19, to_date('2016-02-15', 'YYYY-MM-DD'), to_date('2018-11-15', 'YYYY-MM-DD'), 10, 4);
 -- 19)	Altere o nome do instrutor "Diego Faria" para "Diego Garcia Faria"
+    UPDATE Instrutor set nome = 'Diego Garcia Faria' where nome = 'Diego Faria';
+
 -- 20)	Aumente a nota de todos alunos em 10%
+    UPDATE Matricula set Nota_final = Nota_final*1.1; 
+
 -- 21)	Remova o instrutor "Rodrigo Carvalho" da tabela instrutor. OBS: Observe o que acontece com as turmas associadas ao instrutor "Rodrigo Carvalho".
+    DELETE FROM Instrutor WHERE nome = 'Rodrigo Carvalho';
 -- 22)	Mude o atributo "CNPJ" da tabela "Escola" para um tipo textual.
 -- 23)	Renomeie o atributo "CNPJ" para "CNPJ_Escola".
 -- 24)	Remova o atributo "CNPJ_Escola".
 -- 25)	Remova todos os registros da tabela "Instrutor”. OBS: Observe o que acontece com os registros das tabelas que recebem o atributo "InstrutorID" como foreign key.
+    TRUNCATE TABLE Instrutor;
 -- 26)	Remova o atributo "InstrutorID" da tabela "Instrutor".
 -- 27)	Remova a tabela "Instrutor".
-    drop table Instrutor;
+    DROP TABLE Instrutor;
 -- 28)	Remova todas as tabelas do banco (esquema e conteúdo).
     drop schema public;
 -- 29)	Crie novamente as tabelas do banco de dados usando os scripts acima. 
