@@ -80,9 +80,13 @@ CREATE TABLE Matricula (
 INSERT INTO Instrutor VALUES(1, 11111, 'Rodrigo Carvalho', 'Rua Alfa, num 50, Centro');
 INSERT INTO Instrutor VALUES(2, 22222, 'Jacqueline França', 'Rua Sete de Setembro, num 620, Alvorada');
 INSERT INTO Instrutor VALUES(3, 33333, 'Leandro Siqueira', 'Rua Nelson Davila, num 120, Centro');
-INSERT INTO Instrutor VALUES(4, 33334, 'Diego Faria', 'Rua Siqueira Campos, num 80, Jd Apolo');
+INSERT INTO Instrutor VALUES(4, 33333, 'Diego Faria', 'Rua Siqueira Campos, num 80, Jd Apolo');
 
--- Não Ocorreu nenhum erro.
+-- CPF do instrutor apresentam o mesmo valor, para resolver o valor do segndo foi alterado.
+INSERT INTO Instrutor VALUES(1, 11111, 'Rodrigo Carvalho', 'Rua Alfa, num 50, Centro');
+INSERT INTO Instrutor VALUES(2, 22222, 'Jacqueline França', 'Rua Sete de Setembro, num 620, Alvorada');
+INSERT INTO Instrutor VALUES(3, 33333, 'Leandro Siqueira', 'Rua Nelson Davila, num 120, Centro');
+INSERT INTO Instrutor VALUES(4, 44444, 'Diego Faria', 'Rua Siqueira Campos, num 80, Jd Apolo');
 
 
 -- 4)	Usando os scripts SQL do arquivo “2018_lista_02_sql.sql”, insira os registros da tabela Aluno.  Ocorreu algum erro? Por que? Como resolver? Mostre o comando SQL para resolver o problema encontrado.
@@ -201,37 +205,11 @@ INSERT INTO Matricula VALUES(11, 4, '8.0', 70);
 -- a.	Quais esquemas existem nesse banco de dados?
     SELECT DISTINCT table_schema FROM information_schema.tables;
 
-    --"information_schema"
-    --"pg_catalog"
-    --"public"
-
 -- b.	Recupere as informações sobre as tabelas do esquema “public“.
     SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';
 
-    --"escola"
-    --"curso"
-    --"instrutor"
-    --"turma"
-    --"aluno"
-    --"matricula"
 -- c.	Recupere as informações sobre todas as colunas de todas as tabelas do esquema “public”.
     SELECT DISTINCT column_name FROM information_schema.columns WHERE table_schema = 'public';
-
---"cpf"
---"alunoid"
---"nota_final"
---"carga_horaria"
---"turmaid"
---"data_termino"
---"presenca"
---"escolaid"
---"cursoid"
---"ementa"
---"data_inicio"
---"endereco"
---"nome"
---"cnpj"
---"instrutorid"
 
 -- d.	Recupere as informações sobre todas as restrições (constraints) de todas as tabelas do esquema “public”.
     SELECT * FROM information_schema.table_constraints WHERE table_schema = 'public';
@@ -278,12 +256,13 @@ INSERT INTO Matricula VALUES(11, 4, '8.0', 70);
         GROUP BY Instrutor.InstrutorID, ano;
 
 -- 14)	Quais instrutores deram mais que 850 horas de curso?
-    SELECT Instrutor.nome, SUM(Curso.carga_horaria) as horas_total, SUM(Curso.carga_horaria) > 850 as verificacao
+    SELECT Instrutor.nome, SUM(Curso.carga_horaria) as horas_total
         FROM Turma INNER JOIN Instrutor
         ON Turma.InstrutorID = Instrutor.InstrutorID
         INNER JOIN Curso
         ON Turma.CursoID = Curso.CursoID
-        GROUP BY Instrutor.InstrutorID;
+        GROUP BY Instrutor.InstrutorID
+        HAVING SUM(Curso.carga_horaria) > 850;
 
 -- 15)	Quantas turmas cada curso teve por ano?
     SELECT Curso.Nome, COUNT(Turma.TurmaID) as Total_anual, EXTRACT (YEAR FROM Turma.Data_inicio) AS ano
@@ -332,16 +311,16 @@ INSERT INTO Matricula VALUES(11, 4, '8.0', 70);
     ALTER TABLE Escola DROP COLUMN CNPJ_Escola;
 
 -- 25)	Remova todos os registros da tabela "Instrutor”. OBS: Observe o que acontece com os registros das tabelas que recebem o atributo "InstrutorID" como foreign key.
-    TRUNCATE TABLE Instrutor;
+    DELETE FROM Instrutor;
 
 -- 26)	Remova o atributo "InstrutorID" da tabela "Instrutor".
-    ALTER TABLE Instrutor DROP COLUMN InstrutorID;
+    ALTER TABLE Instrutor DROP COLUMN InstrutorID CASCADE;
 
 -- 27)	Remova a tabela "Instrutor".
     DROP TABLE Instrutor;
 
 -- 28)	Remova todas as tabelas do banco (esquema e conteúdo).
-    drop schema public;
+    drop schema public CASCADE;
 
 -- 29)	Crie novamente as tabelas do banco de dados usando os scripts acima. 
 CREATE SCHEMA Public;
@@ -538,8 +517,7 @@ INSERT INTO Matricula VALUES(11, 4, '8.0', 70);
 CREATE FUNCTION atualiza_pagamento() RETURNS TRIGGER AS $TG_atualiza_pagamento$
 	BEGIN
 		IF (TG_OP = 'INSERT') THEN
-			INSERT INTO Instrutor_pagamento SELECT NEW.InstrutorID, EXTRACT (YEAR FROM NEW.Data_inicio) AS ano, 
-			SUM(Curso.Carga_horaria * Curso.valor_hora) AS valor
+			INSERT INTO Instrutor_pagamento SELECT NEW.InstrutorID, EXTRACT (YEAR FROM NEW.Data_inicio) AS ano, SUM(Curso.Carga_horaria * Curso.Valor_hora) AS valor
 				FROM Curso WHERE Curso.CursoID = NEW.CursoID
 				GROUP BY ano, InstrutorID
 			,NEW.*;
