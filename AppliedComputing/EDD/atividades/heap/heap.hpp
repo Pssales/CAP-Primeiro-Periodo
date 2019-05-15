@@ -3,75 +3,185 @@
 
 #include <iostream>
 #include <vector> 
-using std::vector;
 
-template <class T>
-class Heap{
+using namespace std;
+
+template <class Template>
+class Heap {
     public:
-        Heap(int n);
-        ~Heap();
-        void remove();
-        T top() const; 
-    //Inserção
-    void ConstroiHeap(T valor);
+        Heap();
 
-    //Remoção
-        void FixDownHeap(int n, int pos);
-        void ExtraiHeap();
+        void inserir(Template );
+        void remover();
 
-    private: 
-        vector<T> elementos_;
-        int n_;
-        //Boqueio de construtor e atribuição
+    //  Métodos de manipulação
+        void moveUp();
+        void moveDown();
+        void troca(int filho, int pai);
+
+        
+    // Retorna a posição dos elementos
+        int getPai(int i);
+        int filhoDireita(int i);
+        int filhoEsquerda(int i);
+        int getFilhoDireita(int i);
+        int getFilhoEsquerda(int i);
+
+    // Retorna o valor presente na raiz   
+        Template root();
+        
+    // Retorna a quantidade nós atual da arvore
+        int tamanho();
+    // Retorna a capacidade da árvore
+        int capacidade();
+    // Atribui o valor de capacidade
+        void setCapacidade(int& n);
+        
+        vector<Template> elementos_;
+        int capacidade_;
+        
+    
+    private:
+    //Boqueio de construtor e atribuição
         Heap(Heap&);
         Heap& operator=(Heap&);
+
 };
 
-template<class T>
-Heap<T>::Heap(int n){
-    n_ = n;
+template <class Template>
+Heap<Template>::Heap(){
 }
 
-template<class T>
-Heap<T>::~Heap(){
-    clear(elementos_);
+
+template <class Template>
+void Heap<Template>::inserir(Template valor) {
+    elementos_.push_back(valor);
+    moveUp();
 }
 
-template<class T>
-Heap<T>::insert(T valor){
+template <class Template>
+void Heap<Template>::remover() {
+
+    if(elementos_.size() != 0){
+        int filho = elementos_.size()  - 1;
+        troca(filho, 0);
+        
+        Template valor = elementos_.back();
+        elementos_.pop_back();
+        
+        moveDown();
+    }else{
+        cout << "Nao existem mais valores para serem removidos."<< endl;
+    }
+
 }
 
-template<class T>
-Heap<T>::remove(T valor){
+
+template <class Template>
+void Heap<Template>::moveUp() {
+    int filho = elementos_.size() - 1;
+    int pai = getPai(filho);
+    
+    while (elementos_[filho] > elementos_[pai] && filho >=0 && pai >= 0) {
+        troca(filho, pai);
+        filho = pai;
+        pai = getPai(filho);
+    }
+}
+
+
+template <class Template>
+void Heap<Template>::moveDown() {
+    int pai = 0;
+
+    while (true) {
+        int esquerda = filhoEsquerda(pai);
+        int direira = filhoDireita(pai);
+        int tamanho = elementos_.size();
+        int maior = pai;
+
+        if (esquerda < tamanho && elementos_[esquerda] > elementos_[maior])
+            maior = esquerda;
+
+        if (direira < tamanho && elementos_[direira] > elementos_[maior])
+            maior = direira;
+
+        if (maior != pai) {
+            troca(maior, pai);
+            pai = maior;
+        }else{
+            break;
+        }
+
+    }
+}
+
+template <class Template>
+void Heap<Template>::troca(int filho, int pai) {
+    Template temp;
+    temp = elementos_[filho];
+    elementos_[filho] = elementos_[pai];
+    elementos_[pai] = temp;
+}
+
+
+template <class Template>
+int Heap<Template>::getPai(int filho) {
+    return (filho % 2 == 0)?(filho /2 ) -1 : filho/2  ;
+}
+
+template <class Template>
+int Heap<Template>::filhoDireita(int pai){
+    return 2 * pai + 2;
+}
+
+template <class Template>
+int Heap<Template>::filhoEsquerda(int pai){
+    return 2*pai +1;
+}
+
+template <class Template>
+int Heap<Template>::getFilhoDireita(int pai){
+    if (elementos_.size() > (2 * pai + 2))
+    {
+        return elementos_[2 * pai + 2];
+    }else{
+        cout << "Não existe filho a direita"<< endl;
+    }
     
 }
 
-template<class T>
-void ExtraiHeap()
-{
-    for(int i = 1; i <= n; ++i)
+template <class Template>
+int Heap<Template>::getFilhoEsquerda(int pai){
+     if (elementos_.size() > (2 * pai + 2))
     {
-        int max = elementos_[1];
-        elementos_[1] = elementos_[n – i + 1];
-        FixDownHeap( n - i, 1);
+        return elementos_[2*pai +1];
+    }else{
+        cout << "Não existe filho a esquerda"<< endl;
     }
 }
 
-template<class T>
-void FixDownHeap(int n, int pos){
-    int v = elementos_[pos];
-    int j = 2 * pos;
-    while(j <= n){
-        if((j < n) && (A[j] < elementos_[j + 1]))
-            ++j;
-        if(v > elementos_[j])
-            break;
 
-        elementos_[j / 2] = elementos_[j];
-        j *= 2;
-    }
-
-    elementos_[j / 2] = v;
+template <class Template>
+Template Heap<Template>::root() {
+	return elementos_[0];
 }
+
+
+template <class Template>
+int Heap<Template>::tamanho(){
+    return elementos_.size();
+}
+
+template <class Template>
+int Heap<Template>::capacidade(){
+    return capacidade_;
+}
+
+template <class Template>
+void Heap<Template>::setCapacidade(int& n){
+    capacidade_ = n;
+}
+
 
 #endif
