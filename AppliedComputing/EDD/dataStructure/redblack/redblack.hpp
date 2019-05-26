@@ -10,11 +10,11 @@ class RedBlack{
     public:
         struct Node
         {
-            Node * left;
-            Node * right;
-            Node * parent;
-            T value;
-            bool color;
+            Node * left_;
+            Node * right_;
+            Node * parent_;
+            T value_;
+            bool color_;
         };
 
         RedBlack();
@@ -39,9 +39,63 @@ class RedBlack{
         RedBlack& operator =(Tree&);
     
     private:
-        Node * root;
+        Node * root_;
 
 };
 
 
 #endif  
+
+
+    template<class T>
+    RedBlack<T>::RedBlack(){
+        
+    }
+    template<class T>
+    RedBlack<T>::~RedBlack(){
+        
+    }
+
+    template<class T>
+    RedBlack<T>::getRoot(){
+        
+    }
+    template<class T>
+    RedBlack<T>::level(Node * n){
+        
+    }
+
+    template<class T>
+    RedBlack<T>::insert(const T& value){
+        
+    }
+    template<class T>
+    RedBlack<T>::remove(Node * position){
+        
+    }
+
+    template<class T>
+    RedBlack<T>::print(Node){
+        
+    }
+    template<class T>
+    RedBlack<T>::preOrder(Node * n){
+        
+    }
+    template<class T>
+    RedBlack<T>::inOrder(Node * n){
+        
+    }
+    template<class T>
+    RedBlack<T>::posOrder(Node * n){
+        
+    }
+
+    template<class T>
+    RedBlack<T>::color(Node * n){
+        
+    }
+    template<class T>
+    RedBlack<T>::changeColor(Node * n){
+        
+    }
