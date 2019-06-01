@@ -122,3 +122,5 @@ for t2 = 1:ori_half_size+1
 end
 
 a(1) = 0; % the DC-component of the Fourier spectrum should be zero.
+
+teste = pmodel(4096, 0.52, -1.66)

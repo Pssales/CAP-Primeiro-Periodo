@@ -74,3 +74,5 @@ x = real(ifft(d));
 if (opt_normal)
     x = ((x - min(x))/(max(x) - min(x)) - 0.5) * 2;
 end
+
+x = powernoise(1, 4096,2)
