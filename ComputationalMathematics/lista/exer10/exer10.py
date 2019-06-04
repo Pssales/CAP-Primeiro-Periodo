@@ -16,8 +16,8 @@ def SOC(data, n_bins=50):
     return Prob_Gamma, counts
 
 # filename = '..\s3.txt'
-filename = '..\s7.txt'
-# filename = '..\s8.txt'
+# filename = '..\s7.txt'
+filename = '..\s8.txt'
 data = np.genfromtxt(filename, delimiter = '\n', dtype = 'float32',filling_values = 0)
 
 Prob_Gamma, counts = SOC(data)
@@ -44,5 +44,5 @@ plt.title('Self-Organized Criticality')
 plt.plt.xlabel('log(ni)')
 plt.plt.ylabel('log(Yi)')
 plt.plt.grid()
-
+plt.savefig(filename+'soc.png')
 plt.show()

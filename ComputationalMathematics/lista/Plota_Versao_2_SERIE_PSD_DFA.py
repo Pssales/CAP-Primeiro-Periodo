@@ -23,8 +23,8 @@ def psd(data):
 	"""Calcula o PSD de uma série temporal."""
 	
 	# Define um intervalo para realizar o ajuste da reta
-	INICIO = 100
-	FIM = 2000
+	INICIO = 10
+	FIM = 1500
 	
 	# O vetor com o tempo é o tamanho do número de pontos
 	N = len(data)
@@ -149,7 +149,7 @@ def main():
 	old_settings = np.seterr(divide = 'ignore', invalid = 'ignore', over = 'ignore')
 	
 	# Carrega o arquivo de dados
-	nomeArquivo = 'sol3ghz.dat'		
+	nomeArquivo = 's8.txt'		
 	data = np.genfromtxt(nomeArquivo,
                          delimiter = '\n',
                          dtype = 'float32',
