@@ -2,8 +2,8 @@
 import numpy as np
 import waipy
 
-nome = 'S3_DOG' # nome da série para plotagem
-nomeArquivo = '..\series\s3.txt'		
+nome = 'S8_DOG' # nome da série para plotagem
+nomeArquivo = '..\series\s8.txt'		
 # nomeArquivo = '..\series\s7.txt'		
 # nomeArquivo = '..\series\s8.txt'		
 data = np.genfromtxt(nomeArquivo, delimiter='\n', dtype = 'float32',filling_values = 0)

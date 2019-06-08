@@ -149,7 +149,7 @@ def main():
 	old_settings = np.seterr(divide = 'ignore', invalid = 'ignore', over = 'ignore')
 	
 	# Carrega o arquivo de dados
-	nomeArquivo = 's8.txt'		
+	nomeArquivo = 'series\s7.txt'		
 	data = np.genfromtxt(nomeArquivo,
                          delimiter = '\n',
                          dtype = 'float32',
