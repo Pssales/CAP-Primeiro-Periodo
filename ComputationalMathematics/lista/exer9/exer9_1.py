@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # import packages
 import numpy as np
 import waipy

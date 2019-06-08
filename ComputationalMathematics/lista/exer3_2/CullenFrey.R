@@ -19,9 +19,9 @@ fy <- fitdist(MyData$V1, "gamma")
 fw <- fitdist(MyData$V1, "lnorm")
 fw <- fitdist(MyData$V1, "beta")
 
-#summary(fy)
+summary(fy)
 
-#summary(fw)
+summary(fw)
 
 # output
 # min:  1.92   max:  1.99 

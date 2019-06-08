@@ -1,4 +1,6 @@
-load S3.txt
+load fractaldata
+
+S3 = dlmread('s3.csv', ' ')
 
 scmin=16;
 
@@ -14,7 +16,7 @@ q=linspace(-5,5,101);
 
 m=1;
 
-signal1=multifractal;
+signal1=S3;
 
 signal2=monofractal;
 
