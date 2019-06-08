@@ -10,39 +10,36 @@ def SOC(data, n_bins=50):
         Gamma.append((data[i] - np.mean(data))/np.std(data))
 
     counts, bins = np.histogram(Gamma, n_bins)
-    Prob_Gamma = []
+    PGamma = []
     for i in range(0, n_bins):
-        Prob_Gamma.append(counts[i]/n)
-    return Prob_Gamma, counts
+        PGamma.append(counts[i]/n)
+    return PGamma, counts
 
-# filename = '..\s3.txt'
-# filename = '..\s7.txt'
-filename = '..\s8.txt'
+filename = '..\series\s3.txt'
+# filename = '..\series\s7.txt'
+# filename = '..\series\s8.txt'
 data = np.genfromtxt(filename, delimiter = '\n', dtype = 'float32',filling_values = 0)
 
-Prob_Gamma, counts = SOC(data)
+PGamma, counts = SOC(data)
 
 x = np.linspace(1, len(counts), len(counts))
 
-log_Prob = np.log10(Prob_Gamma)
-log_counts = np.log10(counts)
+log_Prob = np.log10(PGamma)
 
-p = np.array(Prob_Gamma)
+p = np.array(PGamma)
 p = p[np.nonzero(p)]
 c = counts[np.nonzero(counts)]
-log_p = np.log10(p)
-log_c = np.log10(c)
+logP = np.log10(p)
 
-a = (log_p[np.argmax(c)] - log_p[np.argmin(c)]) / (np.max(c) - np.min(c))
-b = log_Prob[0]
-y = b * np.power(10, (a*counts))
+a = (logP[np.argmax(c)] - logP[np.argmin(c)]) / (np.max(c) - np.min(c))
+y = log_Prob[0] * np.power(10, (a*counts))
 
 plt.clf()
-plt.plot(np.log10(counts), y,color='red')
-
+plt.scatter(np.log10(counts), y, marker = "." , color="red")
 plt.title('Self-Organized Criticality')
 plt.plt.xlabel('log(ni)')
 plt.plt.ylabel('log(Yi)')
 plt.plt.grid()
-plt.savefig(filename+'soc.png')
+
+# plt.savefig(filename+'soc.png')
 plt.show()

@@ -3,9 +3,9 @@ import numpy as np
 import waipy
 
 nome = 'S8' # nome da série para plotagem
-# nomeArquivo = '..\s3.txt'		
-# nomeArquivo = '..\s7.txt'		
-nomeArquivo = '..\s8.txt'		
+# nomeArquivo = '..\series\s3.txt'		
+# nomeArquivo = '..\series\s7.txt'		
+nomeArquivo = '..\series\s8.txt'		
 data = np.genfromtxt(nomeArquivo, delimiter='\n', dtype = 'float32',filling_values = 0)
 
 time = np.linspace(0, len(data), len(data))
