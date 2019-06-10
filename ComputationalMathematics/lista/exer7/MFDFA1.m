@@ -1,7 +1,7 @@
-function [Hq,tq,alpha,falpha,Fq] = mfdfa(signal,scale,q,m,Fig)
+function [Hq,tq,hq,Dq,Fq] = MFDFA1(signal,scale,q,m,Fig)
 % Multifractal detrended fluctuation analysis (MFDFA)
-%Credit: Ihlen,2012
-% [Hq,tq,alpha,falpha,Fq]=MFDFA(signal,scale,q,m,Fig);
+%
+% [Hq,tq,hq,Dq,Fq]=MFDFA(signal,scale,q,m,Fig);
 %
 % INPUT PARAMETERS---------------------------------------------------------
 %
@@ -10,14 +10,14 @@ function [Hq,tq,alpha,falpha,Fq] = mfdfa(signal,scale,q,m,Fig)
 % q:            q-order that weights the local variations 
 % m:            polynomial order for the detrending
 % Fig:          1/0 flag for output plot of Fq, Hq, tq and multifractal
-%               spectrum (i.e. falpha versus alpha).
+%               spectrum (i.e. Dq versus hq).
 %
 % OUTPUT VARIABLES---------------------------------------------------------
 %
 % Hq:           q-order Hurst exponent
 % tq:           q-order mass exponent 
-% alpha:        q-order singularity exponent
-% falpha:       q-order dimension 
+% hq:           q-order singularity exponent
+% Dq:           q-order dimension 
 % Fq:           q-order scaling function
 %
 % EXAMPLE------------------------------------------------------------------
@@ -33,9 +33,9 @@ function [Hq,tq,alpha,falpha,Fq] = mfdfa(signal,scale,q,m,Fig)
 % signal1=multifractal;
 % signal2=monofractal;
 % signal3=whitenoise;
-% [Hq1,tq1,alpha1,falpha1,Fq1]=MFDFA1(signal1,scale,q,m,1);
-% [Hq2,tq2,alpha2,falpha2,Fq2]=MFDFA1(signal2,scale,q,m,1);
-% [Hq3,tq3,alpha3,falpha3,Fq3]=MFDFA1(signal3,scale,q,m,1);
+% [Hq1,tq1,hq1,Dq1,Fq1]=MFDFA1(signal1,scale,q,m,1);
+% [Hq2,tq2,hq2,Dq2,Fq2]=MFDFA1(signal2,scale,q,m,1);
+% [Hq3,tq3,hq3,Dq3,Fq3]=MFDFA1(signal3,scale,q,m,1);
 %--------------------------------------------------------------------------
 warning off
 X=cumsum(signal-mean(signal));
@@ -68,8 +68,8 @@ for nq=1:length(q),
     qRegLine{nq} = polyval(C,log2(scale));
 end
 tq = Hq.*q-1;
-alpha = diff(tq)./(q(2)-q(1));
-falpha = (q(1:end-1).*alpha)-tq(1:end-1);
+hq = diff(tq)./(q(2)-q(1));
+Dq = (q(1:end-1).*hq)-tq(1:end-1);
 
 %OUTPUT FIGURE-------------------------------------------------------------
 if Fig==1, 
@@ -86,12 +86,12 @@ if Fig==1,
    tqstart1=tq(qindex(1));
    tqmid1=tq(qindex(2));
    tqstop1=tq(qindex(3));
-   alphastart2=alpha(qindex2(1));
-   alphamid2=alpha(qindex2(2));
-   alphastop2=alpha(qindex2(3));
-   falphastart1=falpha(qindex2(1));
-   falphamid1=falpha(qindex2(2));
-   falphastop1=falpha(qindex2(3));
+   hqstart2=hq(qindex2(1));
+   hqmid2=hq(qindex2(2));
+   hqstop2=hq(qindex2(3));
+   Dqstart1=Dq(qindex2(1));
+   Dqmid1=1%Dq(qindex2(2));
+   Dqstop1=Dq(qindex2(3));
    for nq=1:length(qindex),
        qRegFit(nq,:)=qRegLine{qindex(nq)};
    end
@@ -100,8 +100,8 @@ if Fig==1,
    X2=q;
    Y1=Hq;
    Y3=tq;
-   X4=alpha;
-   Y5=falpha;
+   X4=hq;
+   Y5=Dq;
    %---------------------------
     q_end=num2str(max(q));
     if length(find(q==0))==1
@@ -288,43 +288,47 @@ if Fig==1,
         'Color',[0 0 1]);
 
     % Create xlabel
-    xlabel('alpha','FontSize',16);
+    xlabel('hq','FontSize',16);
 
     % Create ylabel
-    ylabel('falpha','FontSize',16);
+    ylabel('Dq','FontSize',16);
 
     % Create title
-    title('Multifractal spectrum','FontSize',14);
+    alpha_max = hq(q==min(q))
+    alpha_min = hq(find(q==max(q))-1)
+    psi = ((alpha_max-alpha_min)/alpha_max)
+    title(strcat('Multifractal spectrum', sprintf('\n'), '\psi = ',num2str(psi)),'FontSize',14);
 
     % Create plot
-    plot(alphastart2,falphastart1,'Parent',subplot4,'MarkerFaceColor',[1 0 0],...
+    plot(hqstart2,Dqstart1,'Parent',subplot4,'MarkerFaceColor',[1 0 0],...
         'MarkerEdgeColor',[0 0 0],...
         'MarkerSize',8,...
         'Marker','o',...
         'LineWidth',2,...
         'LineStyle','none',...
         'Color',[1 0 0],...
-        'DisplayName',[strcat('falpha(',num2str(min(q)),') = ',num2str(falpha(q==min(q)))),sprintf('\n'),strcat('alpha(',num2str(min(q)),') = ',num2str(alpha(q==min(q))))]);
+        'DisplayName',[strcat('Dq(',num2str(min(q)),') = ',num2str(Dq(q==min(q)))),sprintf('\n'),strcat('hq(',num2str(min(q)),') = ',num2str(hq(q==min(q))))]);
 
     % Create plot
-    plot(alphamid2,falphamid1,'Parent',subplot4,'MarkerFaceColor',[0 0 1],...
+    plot(hqmid2,Dqmid1,'Parent',subplot4,'MarkerFaceColor',[0 0 1],...
         'MarkerEdgeColor',[0 0 0],...
         'MarkerSize',8,...
         'Marker','o',...
         'LineWidth',2,...
         'LineStyle','none',...
         'Color',[0 0 1],...
-        'DisplayName',[strcat('falpha(',num2str(q_middle),') = ',num2str(falpha(q==q_middle))),sprintf('\n'),strcat('alpha(',num2str(q_middle),') = ',num2str(alpha(q==q_middle)))]);
+        'DisplayName',[strcat('Dq(',num2str(q_middle),') = ',num2str(Dq(q==q_middle))),sprintf('\n'),strcat('hq(',num2str(q_middle),') = ',num2str(hq(q==q_middle)))]);
 
     % Create plot
-    plot(alphastop2,falphastop1,'Parent',subplot4,'MarkerFaceColor',[0 0.498 0],...
+    plot(hqstop2,Dqstop1,'Parent',subplot4,'MarkerFaceColor',[0 0.498 0],...
         'MarkerEdgeColor',[0 0 0],...
         'MarkerSize',8,...
         'Marker','o',...
         'LineWidth',2,...
         'LineStyle','none',...
         'Color',[0 0.498 0],...
-        'DisplayName',[strcat('falpha(',num2str(max(q)),') = ',num2str(falpha(find(q==max(q))-1))),sprintf('\n'),strcat('alpha(',num2str(max(q)),') = ',num2str(alpha(find(q==max(q))-1)))]);
+        'DisplayName',[strcat('Dq(',num2str(max(q)),') = ',num2str(Dq(find(q==max(q))-1))), sprintf('\n'), strcat('hq(',num2str(max(q)),') = ',num2str(hq(find(q==max(q))-1)))]);
+
 
     % Create legend
     %legend1 = legend(subplot1,'show');
@@ -354,7 +358,7 @@ if Fig==1,
 
     % Create textbox
     annotation(figure1,'textbox',[0.6355 0.1669 0.2013 0.05518],...
-        'String',{strcat('alpha_m_a_x - alpha_m_i_n = ',num2str(max(alpha)-min(alpha)))},...
+        'String',{strcat('hq_m_a_x - hq_m_i_n = ',num2str(max(hq)-min(hq)))},...
         'HorizontalAlignment','center',...
         'FontSize',14,...
         'FitBoxToText','off',...

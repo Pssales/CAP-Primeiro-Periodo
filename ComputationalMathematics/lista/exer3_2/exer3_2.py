@@ -9,18 +9,34 @@ def create(array, upperLimit, downLimit, amount):
         rand = round(np.random.uniform(upperLimit,downLimit),2)
         array.append(rand)
 
-irreg_temp = []
-esp_temp = []
-elip_temp = []
+irregular = []
+espiral = []
+elipitica = []
 
-create(irreg_temp, 1.97,1.99, 33)
-create(irreg_temp, 1.96,1.98, 103)
-create(irreg_temp, 1.92,1.96, 64)
+for i in range(10):
+    create(irregular, 1.97,1.99, 33)
+    create(espiral, 1.96,1.98, 103)
+    create(elipitica, 1.92,1.96, 64)
 
-arq = open("teste.csv", "w")
+arqIrre = open("totalirregular.csv", "w")
+arqEsp = open("totalespiral.csv", "w")
+arqEli = open("totaleliptica.csv", "w")
+arqTotal = open("totalcompleto.csv", "w")
 
-for i in range(len(irreg_temp)):
-    arq.write(str(irreg_temp[i])+";\n")
+for i in range(len(irregular)):
+    arqIrre.write(str(irregular[i])+";\n")
+    arqTotal.write(str(irregular[i])+";\n")
 
-arq.close()
-print(irreg_temp)
+for i in range(len(espiral)):
+    arqEsp.write(str(espiral[i])+";\n")
+    arqTotal.write(str(espiral[i])+";\n")
+
+for i in range(len(elipitica)):
+    arqEli.write(str(elipitica[i])+";\n")
+    arqTotal.write(str(elipitica[i])+";\n")
+
+arqIrre.close()
+arqEli.close()
+arqEsp.close()
+arqTotal.close()
+print(irregular)

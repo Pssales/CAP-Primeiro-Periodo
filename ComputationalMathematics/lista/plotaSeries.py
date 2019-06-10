@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-# import seaborn
 
 # Normaliza o sinal entre -1 e 1
 def normalize(signal):
@@ -9,7 +8,6 @@ def normalize(signal):
 
 def plot(filename):
     data = np.genfromtxt(filename,delimiter = ',',dtype = 'float32',filling_values = 0) 
-    # sns.distplot(data)
     data = normalize(data)
     plt.plot(data, color='red')
     plt.xlabel('t')
@@ -18,17 +16,13 @@ def plot(filename):
     plt.show()
     
    
-# plot("s1.txt")
-# plot("s2.txt")
-# plot("s3.txt")
-# plot("s4.txt")
-# plot("s5.txt")
-# plot("s6.txt")
-# plot("s7.txt")
-plot("s8.txt")
-plot("s9.txt")
-plot("s10.txt")
-
-# plot("snorms1.txt")
-# plot("snorms2.txt")
-# plot("snorms3.txt")
+plot("..\series\s1.txt")
+plot("..\series\s2.txt")
+plot("..\series\s3.txt")
+plot("..\series\s4.txt")
+plot("..\series\s5.txt")
+plot("..\series\s6.txt")
+plot("..\series\s7.txt")
+plot("..\series\s8.txt")
+plot("..\series\s9.txt")
+plot("..\series\s10.txt")

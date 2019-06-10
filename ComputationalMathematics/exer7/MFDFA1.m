@@ -90,7 +90,7 @@ if Fig==1,
    hqmid2=hq(qindex2(2));
    hqstop2=hq(qindex2(3));
    Dqstart1=Dq(qindex2(1));
-   Dqmid1=Dq(qindex2(2));
+   Dqmid1=1%Dq(qindex2(2));
    Dqstop1=Dq(qindex2(3));
    for nq=1:length(qindex),
        qRegFit(nq,:)=qRegLine{qindex(nq)};
@@ -294,7 +294,10 @@ if Fig==1,
     ylabel('Dq','FontSize',16);
 
     % Create title
-    title('Multifractal spectrum','FontSize',14);
+    alpha_max = hq(q==min(q))
+    alpha_min = hq(find(q==max(q))-1)
+    psi = ((alpha_max-alpha_min)/alpha_max)
+    title(strcat('Multifractal spectrum', sprintf('\n'), '\psi = ',num2str(psi)),'FontSize',14);
 
     % Create plot
     plot(hqstart2,Dqstart1,'Parent',subplot4,'MarkerFaceColor',[1 0 0],...
@@ -324,7 +327,8 @@ if Fig==1,
         'LineWidth',2,...
         'LineStyle','none',...
         'Color',[0 0.498 0],...
-        'DisplayName',[strcat('Dq(',num2str(max(q)),') = ',num2str(Dq(find(q==max(q))-1))),sprintf('\n'),strcat('hq(',num2str(max(q)),') = ',num2str(hq(find(q==max(q))-1)))]);
+        'DisplayName',[strcat('Dq(',num2str(max(q)),') = ',num2str(Dq(find(q==max(q))-1))), sprintf('\n'), strcat('hq(',num2str(max(q)),') = ',num2str(hq(find(q==max(q))-1)))]);
+
 
     % Create legend
     %legend1 = legend(subplot1,'show');

@@ -24,7 +24,7 @@ def psd(data):
 	
 	# Define um intervalo para realizar o ajuste da reta
 	INICIO = 10
-	FIM = 1500
+	FIM = 200
 	
 	# O vetor com o tempo é o tamanho do número de pontos
 	N = len(data)
@@ -149,7 +149,7 @@ def main():
 	old_settings = np.seterr(divide = 'ignore', invalid = 'ignore', over = 'ignore')
 	
 	# Carrega o arquivo de dados
-	nomeArquivo = 'series\s7.txt'		
+	nomeArquivo = 'surftemp504.txt'		
 	data = np.genfromtxt(nomeArquivo,
                          delimiter = '\n',
                          dtype = 'float32',
