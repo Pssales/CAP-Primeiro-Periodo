@@ -22,12 +22,6 @@
 # First version by Victor Venema, Victor.Venema@uni-bonn.de, 25 January
 # 2006.
 
-# ----------------------------------------------------------------------
-# Version 2019 - python
-# Camila Sales 
-# camila.sales@inpe.br
-# ----------------------------------------------------------------------
-
 import numpy as np
 import math
 

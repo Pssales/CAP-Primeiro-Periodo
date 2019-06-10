@@ -40,7 +40,6 @@ def plot(probabilidades, n):
     else:
         pylab.plt.xticks(np.arange(0, n+1, 20))
     
-    sns.distplot(probabilidades)
     title = 'Distribuição da probabilidade de um dado valor\n se um dado for jogado um dado ' + str(n) + ' vezes'
     pylab.plt.title(title)
     pylab.plt.xlabel('Número de sucessos')
